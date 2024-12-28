@@ -1,4 +1,7 @@
-from avaliacao import Avaliacao
+from .avaliacao import Avaliacao
+from .cardapio.item_cardapio import ItemCardapio
+
+
 
 class Restaurante:
 
@@ -10,6 +13,7 @@ class Restaurante:
         self._categoria = categoria.upper()
         self._ativo = False
         self._lista_de_avaliacao = []
+        self._cardapio = []
         Restaurante.restaurantes.append(self)
     
     def __str__(self):
@@ -48,5 +52,19 @@ class Restaurante:
 
         return media
 
+    def adicionar_no_cardapio(self, item):
+        if isinstance(item, ItemCardapio):
+            self._cardapio.append(item)
+
+    @property
+    def listar_cardapio(self):
+        print(f"Cardápio do {self._nome}")
+        for i,item in enumerate(self._cardapio, start=1):
+            if hasattr(item, "_tipo"):
+                print(f"{i} Nome: {item._nome} / Preço: {item._preco} / tipo: {item._tipo} / Descrição: {item._descricao}")
+            elif hasattr(item, "_descricao"):
+                print(f"{i} Nome: {item._nome} / Preço: {item._preco} / Descrição: {item._descricao}")
+            elif hasattr(item, "_tamanho"):
+                print(f"{i} Nome: {item._nome} / Preço: {item._preco} / Tamanho: {item._tamanho}")
 
 
